@@ -1,17 +1,28 @@
-
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import LoginForm from "@/components/auth/LoginForm";
 import SignupForm from "@/components/auth/SignupForm";
-import Dashboard from "@/components/dashboard/Dashboard";
 import { useToast } from "@/hooks/use-toast";
 
-const Index = () => {
+interface IndexProps {
+  setUser: (user: any) => void;
+}
+
+const Index = ({ setUser }: IndexProps) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [user, setUser] = useState(null);
+  const [loggingOut, setLoggingOut] = useState(false);
   const { toast } = useToast();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      navigate("/dashboard", { replace: true });
+    }
+  }, [navigate]);
 
   const handleLogin = (userData: any) => {
     setUser(userData);
@@ -20,6 +31,7 @@ const Index = () => {
       title: "Welcome back!",
       description: "Successfully logged in to your job tracker.",
     });
+    navigate("/dashboard", { replace: true });
   };
 
   const handleSignup = (userData: any) => {
@@ -29,19 +41,33 @@ const Index = () => {
       title: "Account created!",
       description: "Welcome to your new job tracking dashboard.",
     });
+    navigate("/dashboard", { replace: true });
   };
 
   const handleLogout = () => {
+    setLoggingOut(true);
     setUser(null);
     setIsAuthenticated(false);
+    localStorage.removeItem("token");
     toast({
       title: "Logged out",
       description: "See you next time!",
     });
+    setTimeout(() => {
+      setLoggingOut(false);
+      navigate("/", { replace: true });
+    }, 1000); // 1 second loader for UX
   };
 
-  if (isAuthenticated) {
-    return <Dashboard user={user} onLogout={handleLogout} />;
+  if (loggingOut) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-green-50">
+        <div className="text-center">
+          <div className="w-12 h-12 border-4 border-blue-400 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-lg text-gray-700">Logging out...</p>
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -88,7 +114,6 @@ const Index = () => {
               Streamline your job search with powerful tracking and AI-driven insights
             </p>
           </div>
-          
           <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
             <Card className="text-center p-6 border-0 shadow-lg bg-white/60 backdrop-blur-sm hover:shadow-xl transition-shadow">
               <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -99,7 +124,6 @@ const Index = () => {
                 Keep track of all your applications, interviews, and follow-ups in one place
               </p>
             </Card>
-
             <Card className="text-center p-6 border-0 shadow-lg bg-white/60 backdrop-blur-sm hover:shadow-xl transition-shadow">
               <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-2xl">🤖</span>
@@ -109,7 +133,6 @@ const Index = () => {
                 Get intelligent recommendations and insights to improve your job search success
               </p>
             </Card>
-
             <Card className="text-center p-6 border-0 shadow-lg bg-white/60 backdrop-blur-sm hover:shadow-xl transition-shadow">
               <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-2xl">⚡</span>

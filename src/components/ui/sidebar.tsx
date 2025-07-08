@@ -2,6 +2,7 @@ import * as React from "react"
 import { Slot } from "@radix-ui/react-slot"
 import { VariantProps, cva } from "class-variance-authority"
 import { PanelLeft } from "lucide-react"
+import { NavLink } from "react-router-dom"
 
 import { useIsMobile } from "@/hooks/use-mobile"
 import { cn } from "@/lib/utils"
@@ -204,7 +205,16 @@ const Sidebar = React.forwardRef<
             }
             side={side}
           >
-            <div className="flex h-full w-full flex-col">{children}</div>
+            <div className="flex h-full w-full flex-col">
+              {children}
+              <div className="flex flex-col gap-2 p-4">
+                <NavLink to="/dashboard" className={({ isActive }) => isActive ? "font-bold text-blue-600" : ""}>Overview</NavLink>
+                <NavLink to="/dashboard/applications" className={({ isActive }) => isActive ? "font-bold text-blue-600" : ""}>Applications</NavLink>
+                <NavLink to="/dashboard/add-job" className={({ isActive }) => isActive ? "font-bold text-blue-600" : ""}>Add Job</NavLink>
+                <NavLink to="/dashboard/profile" className={({ isActive }) => isActive ? "font-bold text-blue-600" : ""}>Profile</NavLink>
+                <NavLink to="/dashboard/ai-insights" className={({ isActive }) => isActive ? "font-bold text-blue-600" : ""}>AI Insights</NavLink>
+              </div>
+            </div>
           </SheetContent>
         </Sheet>
       )
