@@ -6,12 +6,19 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import LoginForm from "@/components/auth/LoginForm";
 import SignupForm from "@/components/auth/SignupForm";
 import { useToast } from "@/hooks/use-toast";
-
+import Hero from "@/components/Hero";
+import MovingSlider from "@/components/Slider";
+import Tools from "@/components/Tools";
+import JobTrackerFAQ from "@/components/Faq";
+import Info from "@/components/Info";
+import Additional from "@/components/Additional";
 interface IndexProps {
   setUser: (user: any) => void;
+  showAuth: boolean;
+  authTab: string;
 }
 
-const Index = ({ setUser }: IndexProps) => {
+const Index = ({ setUser, showAuth, authTab }: IndexProps) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loggingOut, setLoggingOut] = useState(false);
   const { toast } = useToast();
@@ -44,21 +51,6 @@ const Index = ({ setUser }: IndexProps) => {
     navigate("/dashboard", { replace: true });
   };
 
-  const handleLogout = () => {
-    setLoggingOut(true);
-    setUser(null);
-    setIsAuthenticated(false);
-    localStorage.removeItem("token");
-    toast({
-      title: "Logged out",
-      description: "See you next time!",
-    });
-    setTimeout(() => {
-      setLoggingOut(false);
-      navigate("/", { replace: true });
-    }, 1000); // 1 second loader for UX
-  };
-
   if (loggingOut) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-green-50">
@@ -71,18 +63,14 @@ const Index = ({ setUser }: IndexProps) => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-green-50">
-      <div className="container mx-auto px-4 py-8">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-blue-600 to-green-600 bg-clip-text text-transparent mb-4">
-            JobTracker AI
-          </h1>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Track your job applications with AI-powered insights and never miss an opportunity again
-          </p>
-        </div>
-
-        <div className="max-w-md mx-auto">
+    <div>
+      <Hero />
+      <MovingSlider />
+      <Tools />
+      <Info />
+      <Additional/>
+      {showAuth && (
+        <div className="max-w-md mx-auto py-12">
           <Card className="shadow-xl border-0 bg-white/80 backdrop-blur-sm">
             <CardHeader className="text-center">
               <CardTitle className="text-2xl font-bold text-gray-800">Get Started</CardTitle>
@@ -91,7 +79,7 @@ const Index = ({ setUser }: IndexProps) => {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <Tabs defaultValue="login" className="w-full">
+              <Tabs value={authTab} className="w-full">
                 <TabsList className="grid w-full grid-cols-2 mb-6">
                   <TabsTrigger value="login">Login</TabsTrigger>
                   <TabsTrigger value="signup">Sign Up</TabsTrigger>
@@ -106,45 +94,8 @@ const Index = ({ setUser }: IndexProps) => {
             </CardContent>
           </Card>
         </div>
-
-        <div className="mt-20">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-800 mb-4">Why Choose JobTracker AI?</h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              Streamline your job search with powerful tracking and AI-driven insights
-            </p>
-          </div>
-          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            <Card className="text-center p-6 border-0 shadow-lg bg-white/60 backdrop-blur-sm hover:shadow-xl transition-shadow">
-              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl">📊</span>
-              </div>
-              <h3 className="text-xl font-semibold mb-2">Smart Tracking</h3>
-              <p className="text-gray-600">
-                Keep track of all your applications, interviews, and follow-ups in one place
-              </p>
-            </Card>
-            <Card className="text-center p-6 border-0 shadow-lg bg-white/60 backdrop-blur-sm hover:shadow-xl transition-shadow">
-              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl">🤖</span>
-              </div>
-              <h3 className="text-xl font-semibold mb-2">AI Insights</h3>
-              <p className="text-gray-600">
-                Get intelligent recommendations and insights to improve your job search success
-              </p>
-            </Card>
-            <Card className="text-center p-6 border-0 shadow-lg bg-white/60 backdrop-blur-sm hover:shadow-xl transition-shadow">
-              <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl">⚡</span>
-              </div>
-              <h3 className="text-xl font-semibold mb-2">Quick Actions</h3>
-              <p className="text-gray-600">
-                Save time with automated reminders and quick application templates
-              </p>
-            </Card>
-          </div>
-        </div>
-      </div>
+      )}
+      <JobTrackerFAQ />
     </div>
   );
 };

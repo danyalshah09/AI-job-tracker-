@@ -126,16 +126,7 @@ const Hero = () => {
           {/* Trust Indicators */}
           <div className="text-center">
             <p className="text-gray-500 dark:text-gray-400 mb-6 text-lg">Trusted by job seekers at top companies</p>
-            <div className="flex flex-wrap justify-center items-center gap-8 opacity-60">
-              {["Google", "Microsoft", "Apple", "Amazon", "Meta", "Netflix"].map((company, index) => (
-                <div
-                  key={index}
-                  className="px-6 py-3 bg-white/40 dark:bg-gray-800/40 rounded-lg border border-gray-200/50 dark:border-gray-700/50 backdrop-blur-sm"
-                >
-                  <span className="text-gray-700 dark:text-gray-300 font-semibold text-lg">{company}</span>
-                </div>
-              ))}
-            </div>
+
           </div>
         </div>
       </div>

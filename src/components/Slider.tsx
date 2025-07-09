@@ -94,78 +94,47 @@ const MovingSlider = () => {
   const duplicatedData = [...jobTrackingData, ...jobTrackingData];
 
   return (
-    <div className="w-[70%] mx-auto  dark:bg-gray-900 py-16 overflow-hidden ">
-      <div className="container mx-auto px-6 mb-8 ">
+    <div className="w-full bg-gradient-to-br from-gray-50 via-white to-gray-100 py-16">
+      <div className="container mx-auto px-4 mb-12">
         <div className="text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-            Everything You Need to Land Your <span className="text-2xl md:text-4xl font-bold bg-gradient-to-r from-blue-600 to-green-600 bg-clip-text text-transparent mb-4">
-
-          Dream Job</span>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+            Everything You Need to Land Your{' '}
+            <span className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-blue-600 to-green-600 bg-clip-text text-transparent">
+              Dream Job
+            </span>
           </h2>
-          <p className="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
             Powerful features designed to streamline your job search and maximize your success rate
           </p>
         </div>
       </div>
 
-      <div className="container mx-auto px-6">
-        <div className=" dark:bg-gray-800 rounded-3xl p-8 border border-gray-200 dark:border-gray-700 shadow-lg overflow-hidden">
-          <div className="relative">
-            {/* First row - moving left */}
-            <div className="flex animate-scroll-left mb-8">
-              {duplicatedData.map((item, index) => (
-                <div
-                  key={`left-${index}`}
-                  className="flex-shrink-0 w-96 mx-4 bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
-                >
-                  <div className="flex items-start space-x-4">
-                    <div className="p-3 bg-gradient-to-r from-gray-600 to-gray-700 rounded-full text-white flex-shrink-0">
-                      {item.icon}
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <h3 className="font-bold text-lg text-gray-900 dark:text-white mb-2">
-                        {item.title}
-                      </h3>
-                      <p className="text-gray-600 dark:text-gray-400 text-sm mb-3 leading-relaxed">
-                        {item.description}
-                      </p>
-                      <div className="inline-flex items-center px-3 py-1 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-sm font-semibold">
-                        {item.stat}
-                      </div>
-                    </div>
+      <div className="w-full overflow-hidden">
+        {/* Infinite scroll container */}
+        <div className="flex animate-scroll-left">
+          {duplicatedData.map((item, index) => (
+            <div
+              key={`item-${index}`}
+              className="flex-shrink-0 w-96 mx-4 bg-white rounded-2xl p-6 border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+            >
+              <div className="flex items-start space-x-4">
+                <div className="p-3 bg-gradient-to-r from-blue-600 to-green-600 rounded-full text-white flex-shrink-0">
+                  {item.icon}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <h3 className="font-bold text-lg text-gray-900 mb-2">
+                    {item.title}
+                  </h3>
+                  <p className="text-gray-600 text-sm mb-3 leading-relaxed">
+                    {item.description}
+                  </p>
+                  <div className="inline-flex items-center px-3 py-1 rounded-full bg-gradient-to-r from-blue-100 to-green-100 text-blue-800 text-sm font-semibold">
+                    {item.stat}
                   </div>
                 </div>
-              ))}
+              </div>
             </div>
-
-            {/* Second row - moving right */}
-            <div className="flex animate-scroll-right">
-              {duplicatedData.reverse().map((item, index) => (
-                <div
-                  key={`right-${index}`}
-                  className="flex-shrink-0 w-96 mx-4 bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
-                >
-                  <div className="flex items-start space-x-4">
-                    <div className="p-3 bg-gradient-to-r from-gray-700 to-gray-600 rounded-full text-white flex-shrink-0">
-                      {item.icon}
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <h3 className="font-bold text-lg text-gray-900 dark:text-white mb-2">
-                        {item.title}
-                      </h3>
-                      <p className="text-gray-600 dark:text-gray-400 text-sm mb-3 leading-relaxed">
-                        {item.description}
-                      </p>
-                      <div className="inline-flex items-center px-3 py-1 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-sm font-semibold">
-                        {item.stat}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+          ))}
         </div>
       </div>
 
@@ -180,25 +149,11 @@ const MovingSlider = () => {
           }
         }
 
-        @keyframes scroll-right {
-          0% {
-            transform: translateX(-50%);
-          }
-          100% {
-            transform: translateX(0);
-          }
-        }
-
         .animate-scroll-left {
-          animation: scroll-left 20s linear infinite;
+          animation: scroll-left 30s linear infinite;
         }
 
-        .animate-scroll-right {
-          animation: scroll-right 40s linear infinite;
-        }
-
-        .animate-scroll-left:hover,
-        .animate-scroll-right:hover {
+        .animate-scroll-left:hover {
           animation-play-state: paused;
         }
       `}</style>

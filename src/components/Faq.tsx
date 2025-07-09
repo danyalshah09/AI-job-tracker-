@@ -55,7 +55,7 @@ const JobTrackerFAQ = () => {
             FAQ
           </div>
           <h2 className="text-4xl font-bold text-gray-800 dark:text-white mb-4">
-            Frequently Asked Questions
+            Frequently Asked <span className="text-2xl md:text-4xl font-bold bg-gradient-to-r from-blue-600 to-green-600 bg-clip-text text-transparent mb-4">Questions</span>
           </h2>
           <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
             Everything you need to know about our job tracking platform and how it can accelerate your career journey.

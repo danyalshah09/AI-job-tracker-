@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Link } from "react-router-dom"
 
 
-const Header = () => {
+const Header = ({ setShowAuth, setAuthTab }: { setShowAuth: (show: boolean) => void, setAuthTab: (tab: string) => void }) => {
   const [isOpen, setIsOpen] = useState(false)
 
   return (
@@ -25,10 +25,10 @@ const Header = () => {
 
           {/* Desktop CTA Buttons */}
           <div className="hidden md:flex items-center space-x-3">
-          <Button className="w-full border border-black bg-transparent hover:bg-gray-200 text-black hover:to-blue-700 py-2 rounded-full transition-all duration-300 shadow-lg">
+          <Button onClick={() => {setShowAuth(true); setAuthTab("login");}} className="w-full border border-black bg-transparent hover:bg-gray-200 text-black hover:to-blue-700 py-2 rounded-full transition-all duration-300 shadow-lg">
   Login
 </Button>
-            <Button className="bg-gradient-to-r from-blue-400 to-blue-600 hover:from-blue-500 hover:to-blue-700 text-white px-6 py-2 rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+            <Button onClick={() => {setShowAuth(true); setAuthTab("signup");}} className="bg-gradient-to-r from-blue-400 to-blue-600 hover:from-blue-500 hover:to-blue-700 text-white px-6 py-2 rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
               Signup
             </Button>
           </div>
@@ -53,11 +53,11 @@ const Header = () => {
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t border-gray-200">
             <div className="flex flex-col space-y-2 px-3">
 
-  <Button className="w-full border border-black bg-transparent hover:bg-green-200 text-black py-2 rounded-full transition-all duration-300 shadow-lg">
+  <Button onClick={() => {setShowAuth(true); setAuthTab("login");}} className="w-full border border-black bg-transparent hover:bg-green-200 text-black py-2 rounded-full transition-all duration-300 shadow-lg">
   Login
 </Button>
 
-              <Button className="w-full bg-gradient-to-r from-blue-400 to-blue-600 hover:from-blue-500 hover:to-blue-700 text-white py-2 rounded-full transition-all duration-300 shadow-lg">
+              <Button onClick={() => {setShowAuth(true); setAuthTab("signup");}} className="w-full bg-gradient-to-r from-blue-400 to-blue-600 hover:from-blue-500 hover:to-blue-700 text-white py-2 rounded-full transition-all duration-300 shadow-lg">
                 Signup
               </Button>
             </div>

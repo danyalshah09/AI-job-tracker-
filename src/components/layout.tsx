@@ -7,15 +7,11 @@ import MovingSlider from "./Slider";
 import Tools from "./Tools";
 import JobTrackerFAQ from "./Faq";
 import Info from "./Info"
-const Layout = ({ children }: { children: React.ReactNode }) => (
-  <div className="flex flex-col min-h-screen">
-    <Header />
-    <Hero/>
-    <MovingSlider/>
-    <Tools/>
-    <Info/>
+const Layout = ({ children, setShowAuth, setAuthTab }: { children: React.ReactNode, setShowAuth: (show: boolean) => void, setAuthTab: (tab: string) => void }) => (
+  <div className="flex flex-col min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-50">
+    <Header setShowAuth={setShowAuth} setAuthTab={setAuthTab} />
     <main className="flex-1">{children}</main>
-    <JobTrackerFAQ/>
+
     <Footer />
   </div>
 );
