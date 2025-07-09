@@ -7,6 +7,7 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Dashboard from "@/components/dashboard/Dashboard";
 import { useState } from "react";
+import Layout from "@/components/layout";
 
 const queryClient = new QueryClient();
 
@@ -35,11 +36,13 @@ function AppRoutes() {
           </div>
         </div>
       )}
-      <Routes>
-        <Route path="/" element={<Index setUser={setUser} />} />
-        <Route path="/dashboard" element={<Dashboard user={user} onLogout={handleLogout} loggingOut={loggingOut} />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+      <Layout>
+        <Routes>
+          <Route path="/" element={<Index setUser={setUser} />} />
+          <Route path="/dashboard" element={<Dashboard user={user} onLogout={handleLogout} loggingOut={loggingOut} />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </Layout>
     </>
   );
 }
