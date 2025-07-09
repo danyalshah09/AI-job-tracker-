@@ -7,12 +7,15 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Dashboard from "@/components/dashboard/Dashboard";
 import { useState } from "react";
+import Layout from "@/components/layout";
 
 const queryClient = new QueryClient();
 
 function AppRoutes() {
   const [user, setUser] = useState(null);
   const [loggingOut, setLoggingOut] = useState(false);
+  const [showAuth, setShowAuth] = useState(false);
+  const [authTab, setAuthTab] = useState("login");
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -35,11 +38,13 @@ function AppRoutes() {
           </div>
         </div>
       )}
-      <Routes>
-        <Route path="/" element={<Index setUser={setUser} />} />
-        <Route path="/dashboard" element={<Dashboard user={user} onLogout={handleLogout} loggingOut={loggingOut} />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+      <Layout setShowAuth={setShowAuth} setAuthTab={setAuthTab}>
+        <Routes>
+          <Route path="/" element={<Index setUser={setUser} showAuth={showAuth} authTab={authTab} />} />
+          <Route path="/dashboard" element={<Dashboard user={user} onLogout={handleLogout} loggingOut={loggingOut} />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </Layout>
     </>
   );
 }
