@@ -8,6 +8,9 @@ import NotFound from "./pages/NotFound";
 import Dashboard from "@/components/dashboard/Dashboard";
 import { useState } from "react";
 import Layout from "@/components/layout";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
+import LoginForm from "@/components/auth/LoginForm";
+import SignupForm from "@/components/auth/SignupForm";
 
 const queryClient = new QueryClient();
 
@@ -28,6 +31,12 @@ function AppRoutes() {
     }, 1000);
   };
 
+  // Handler for successful login/signup
+  const handleAuthSuccess = (userData: any) => {
+    setUser(userData);
+    setShowAuth(false);
+  };
+
   return (
     <>
       {loggingOut && (
@@ -45,6 +54,35 @@ function AppRoutes() {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Layout>
+
+      {/* Auth Modal */}
+      <Dialog open={showAuth} onOpenChange={setShowAuth}>
+        <DialogContent className="max-w-md w-full p-0">
+          <div className="flex border-b">
+            <button
+              className={`flex-1 py-2 text-center ${authTab === "login" ? "font-bold border-b-2 border-blue-600" : "text-gray-500"}`}
+              onClick={() => setAuthTab("login")}
+              aria-current={authTab === "login"}
+            >
+              Login
+            </button>
+            <button
+              className={`flex-1 py-2 text-center ${authTab === "signup" ? "font-bold border-b-2 border-blue-600" : "text-gray-500"}`}
+              onClick={() => setAuthTab("signup")}
+              aria-current={authTab === "signup"}
+            >
+              Signup
+            </button>
+          </div>
+          <div className="p-6">
+            {authTab === "login" ? (
+              <LoginForm onLogin={handleAuthSuccess} />
+            ) : (
+              <SignupForm onSignup={handleAuthSuccess} />
+            )}
+          </div>
+        </DialogContent>
+      </Dialog>
     </>
   );
 }
@@ -62,5 +100,4 @@ function App() {
     </QueryClientProvider>
   );
 }
-
 export default App;
